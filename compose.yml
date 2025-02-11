@@ -29,6 +29,11 @@ services:
         target: "/usr/share/nginx/html/merged.yaml"
     environment:
       SPEC_URL: merged.yaml
+  swagger-editor:
+    image: docker.swagger.io/swaggerapi/swagger-editor
+    platform: linux/x86_64
+    ports:
+      - 8013:8080
   redoc-cli:
     build: ./workspace/redoc-cli
     volumes:

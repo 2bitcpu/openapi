@@ -29,6 +29,10 @@
 
 merged.yamlは結合結果のファイルなので、このファイルを直接編集しないこと。  
 
+Swagger Editor `http://localhost:8013`  
+ここでコード生成もできるようだが選択可能な言語が少ない  
+もっと沢山対応しているはずなのだが...  
+
 # APIドキュメントをブラウザ表示
 UIは、SwaggerUIとReDocの両方で表示可能なので、好みの方を利用する。  
 SwaggerUI `http://localhost:8011`  
