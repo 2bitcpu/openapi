@@ -1,0 +1,49 @@
+services:
+  api-mock:
+    image: danielgtaylor/apisprout
+    platform: linux/x86_64
+    ports:
+      - 8010:8000
+    volumes:
+      - type: bind
+        source: "./workspace/openapi/merged.yaml"
+        target: "/workspace/openapi/merged.yaml"
+    entrypoint: /usr/local/bin/apisprout /workspace/openapi/merged.yaml --watch
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - 8011:8080
+    volumes:
+      - type: bind
+        source: "./workspace/openapi/merged.yaml"
+        target: "/usr/share/nginx/html/merged.yaml"
+    environment:
+      API_URL: merged.yaml
+  redoc:
+    image: redocly/redoc
+    ports:
+      - 8012:80
+    volumes:
+      - type: bind
+        source: "./workspace/openapi/merged.yaml"
+        target: "/usr/share/nginx/html/merged.yaml"
+    environment:
+      SPEC_URL: merged.yaml
+  redoc-cli:
+    build: ./workspace/redoc-cli
+    volumes:
+      - type: bind
+        source: "./workspace/openapi"
+        target: "/data"
+  swagger-merger:
+    build: ./workspace/swagger-merger
+    volumes:
+      - type: bind
+        source: "./workspace/swagger-merger/watch.js"
+        target: "/watch.js"
+      - type: bind
+        source: "./workspace/openapi"
+        target: "/data"
+    environment:
+      NODE_PATH: /usr/local/lib/node_modules
+    entrypoint: node /watch
