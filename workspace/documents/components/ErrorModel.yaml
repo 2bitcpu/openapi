@@ -1,0 +1,52 @@
+#   ErrorModel
+      description: Response Error Model.
+      required:
+        - StatusCode
+        - Message
+      type: object
+      properties:
+        StatusCode:
+          title: StatucCode
+          type: integer
+          format: int32
+          example: 500
+        Message:
+          title: statuscode of name
+          type: string
+          example: Internal Server Error.
+        ValidationErrors:
+          type: array
+          description: ValidationErrors
+          items:
+            type: object
+            properties:
+              Code:
+                title: メッセージコード
+                type: string
+                example: null
+              Message:
+                title: メッセージ
+                type: string
+                example: null
+              Attribute:
+                title: 項目
+                type: string
+                example: null
+        BusinessErrors:
+          type: array
+          description: BusinessErrors
+          items:
+            type: object
+            properties:
+              Code:
+                title: メッセージコード
+                type: string
+                example: null
+              Message:
+                title: メッセージ
+                type: string
+                example: null
+              Attribute:
+                title: 項目
+                type: string
+                example: null

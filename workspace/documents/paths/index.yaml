@@ -1,0 +1,6 @@
+#【共通】システム日時取得API
+/GetSystemDateTime:
+  $ref: 'GetSystemDateTime.yaml'
+#【申込】申込作成API
+/PostCreateOrder:
+  $ref: 'PostCreateOrder.yaml'

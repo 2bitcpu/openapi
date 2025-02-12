@@ -1,0 +1,13 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Swagger example
+tags:
+  - name: common
+    description: 共通領域
+  - name: order
+    description: 申込領域
+paths:
+  $ref: './paths/index.yaml'
+components:
+  $ref: './components/index.yaml'

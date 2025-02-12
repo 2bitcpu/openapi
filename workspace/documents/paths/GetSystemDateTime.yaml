@@ -1,0 +1,31 @@
+#  /common/GetSystemDateTime:
+    get:
+      tags:
+        - common
+      summary: システム日時取得API
+      description: |-
+        [Overview]
+
+        サーバ内システム日時を[yyyy-MM-dd HH:mm:ss](JST)形式で返却する
+
+        [Details]
+
+        1.システム日時を返却する
+        - 1-1. 設定ファイルに保存されている値が存在する場合、その日時を返却する
+
+      operationId: GetSystemDateTime
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  SystemDateTime:
+                    type: string
+                    description: システム日時
+                    format: date-time
+                    example: '2023-09-22 09:22:22'
+        '500':
+          $ref: '#/components/InternalServerErrorResponse'

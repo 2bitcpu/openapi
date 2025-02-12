@@ -2,7 +2,7 @@ const chokidar = require('chokidar');
 const swagger_merger = require('swagger-merger');
 
 const root_file = 'index.yaml';
-const merged_file = 'merged.yaml';
+const merged_file = 'openapi.yaml';
 
 chokidar.watch('.', {ignored: merged_file}).on('all', (event, path) => {
     console.log(event, path);
