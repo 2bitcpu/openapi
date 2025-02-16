@@ -1,6 +1,0 @@
-ProcessResultModel:
-  $ref: 'ProcessResultModel.yaml'
-ErrorModel:
-  $ref: 'ErrorModel.yaml'
-InternalServerErrorResponse:
-  $ref: 'InternalServerErrorResponse.yaml'
