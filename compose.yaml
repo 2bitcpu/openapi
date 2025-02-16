@@ -1,54 +1,50 @@
 services:
-  api-mock:
-    image: danielgtaylor/apisprout
-    platform: linux/x86_64
-    ports:
-      - 8010:8000
+  swagger-merger:
+    build:
+      context: .
+      dockerfile: ./swagger-merger/Dockerfile
+    container_name: "openapi-swagger-merger"
+    tty: true
     volumes:
       - type: bind
-        source: "./workspace/openapi/merged.yaml"
-        target: "/workspace/openapi/merged.yaml"
-    entrypoint: /usr/local/bin/apisprout /workspace/openapi/merged.yaml --watch
-  swagger-ui:
-    image: swaggerapi/swagger-ui
-    ports:
-      - 8011:8080
-    volumes:
-      - type: bind
-        source: "./workspace/openapi/merged.yaml"
-        target: "/usr/share/nginx/html/merged.yaml"
-    environment:
-      API_URL: merged.yaml
+        source: "./workspace"
+        target: "/workspace"
+    command: >
+      watch 'swagger-merger -i /workspace/documents/main.yaml -o /workspace/dist/openapi.yaml' /workspace/documents/
+
   redoc:
     image: redocly/redoc
+    container_name: "openapi-redoc"
     ports:
-      - 8012:80
+      - "8010:80"
     volumes:
       - type: bind
-        source: "./workspace/openapi/merged.yaml"
-        target: "/usr/share/nginx/html/merged.yaml"
+        source: "./workspace/dist"
+        target: "/usr/share/nginx/html/api"
     environment:
-      SPEC_URL: merged.yaml
-  swagger-editor:
-    image: docker.swagger.io/swaggerapi/swagger-editor
+      SPEC_URL: api/openapi.yaml
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "openapi-swagger-ui"
+    ports:
+      - "8011:8080"
+    volumes:
+      - type: bind
+        source: ./workspace/dist
+        target: /workspace/dist
+    environment:
+      SWAGGER_JSON: /workspace/dist/openapi.yaml
+
+  api-mock:
     platform: linux/x86_64
+    image: stoplight/prism:4
+    container_name: "openapi-mock"
     ports:
-      - 8013:8080
-  redoc-cli:
-    build: ./workspace/redoc-cli
+      - "8012:4010"
+    restart: always
     volumes:
       - type: bind
-        source: "./workspace/openapi"
-        target: "/data"
-  swagger-merger:
-    build: ./workspace/swagger-merger
-    volumes:
-      - type: bind
-        source: "./workspace/swagger-merger/watch.js"
-        target: "/watch.js"
-      - type: bind
-        source: "./workspace/openapi"
-        target: "/data"
-    environment:
-      NODE_PATH: /usr/local/lib/node_modules
-    entrypoint: node /watch
+        source: ./workspace/dist
+        target: /workspace/dist
+    command: mock -h 0.0.0.0 /workspace/dist/openapi.yaml
