@@ -61,7 +61,7 @@ generate -i /workspace/dist/openapi.yaml -g java-helidon-server -o /workspace/ge
 を参照。
 
 # openapi-fetch用の型生成
-``bash
+```bash
 docker run --rm -it --mount type=bind,source="$(pwd)"/workspace,target=/workspace openapi-typescript /workspace/dist/openapi.yaml -o /workspace/ts/openapi.ts
 ```
 
