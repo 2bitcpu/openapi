@@ -60,6 +60,11 @@ generate -i /workspace/dist/openapi.yaml -g java-helidon-server -o /workspace/ge
 [READMEのOverview](https://github.com/OpenAPITools/openapi-generator?tab=readme-ov-file#overview)
 を参照。
 
+# openapi-fetch用の型生成
+``bash
+docker run --rm -it --mount type=bind,source="$(pwd)"/workspace,target=/workspace openapi-typescript /workspace/dist/openapi.yaml -o /workspace/ts/openapi.ts
+```
+
 # コンテナの停止と削除
 ```bash
 docker rm $(docker stop $(docker ps -a -q --filter="name=openapi"))

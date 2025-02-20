@@ -12,6 +12,18 @@ services:
     command: >
       watch 'swagger-merger -i /workspace/documents/main.yaml -o /workspace/dist/openapi.yaml' /workspace/documents/
 
+  openapi-typescript:
+    build:
+      context: .
+      dockerfile: ./openapi-typescript/Dockerfile
+    image: openapi-typescript
+    container_name: "openapi-typescript"
+    tty: true
+    volumes:
+      - type: bind
+        source: "./workspace"
+        target: "/workspace"
+
   redoc:
     image: redocly/redoc
     container_name: "openapi-redoc"
